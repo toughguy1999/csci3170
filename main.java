@@ -1,45 +1,52 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 public class main{
     static String userName = "root";
     static String password = "123456";
     static String url = "jdbc:mysql://localhost/test"; // username,pwd,and url can be used by other module
-    public static void main (String[] args) throws IOException {
+    static Date sys_date;
+    static File date = new File("date.txt");
+    public static void main (String[] args) throws IOException, ParseException {
+        // get system date
+        system.get_date();
+
         // main menu interface
+        Scanner sc = new Scanner(System.in);
         while(true) {
             printer.menu();
-            int choice = 0;
-            choice = (int) System.in.read();
+
+            int choice = sc.nextInt();
 
             if (choice == 1) {
                 // system interface
                 printer.system();
-                choice = (int) System.in.read();
+                choice = sc.nextInt();
                 if (choice == 1) {
                     // create
-                    BufferedReader schema = new BufferedReader(new InputStreamReader(System.in));
-                    system.create(schema.readLine());
+                    system.create();
                 }
                 else if (choice == 2){
                     // delete
-                    BufferedReader table = new BufferedReader(new InputStreamReader(System.in));
-                    system.delete(table.readLine());
+                    system.delete();
                 }
                 else if (choice == 3){
                     // insert
-                    BufferedReader path = new BufferedReader(new InputStreamReader(System.in));
                     System.out.println("Please enter the folder path:");
-                    system.insert(path.readLine());
+                    system.insert(sc.next());
                 }
                 else if (choice == 4){
                     // set date
-                    BufferedReader date = new BufferedReader(new InputStreamReader(System.in));
                     System.out.println("Please input the date (YYYYMMDD):");
-
-
-
+                    String new_date = sc.next();
+                    system.set_date(new_date);
+                    sys_date = printer.format_set.parse(new_date);
+                    System.out.println("Latest date in orders: 00");
+                    System.out.println("Today is " + printer.format_show.format(sys_date));
                 }
 
             } else if (choice == 2) {
@@ -49,12 +56,14 @@ public class main{
             } else if (choice == 4) {
 
             } else if (choice == 5) {
-                System.out.println("bye");
-                System.exit(0);
+                break;
             } else {
-                System.out.println("Invalid choice");
+                System.out.println("Invalid choice!");
             }
+
         }
+        System.out.println("bye");
+        System.exit(0);
 
 
     }
