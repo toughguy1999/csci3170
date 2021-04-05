@@ -49,12 +49,12 @@ public class main{
                 }
             }
 
-            // bookstore interface
+            //  customer interface
             else if (choice == 2) {
 
             }
 
-            // customer interface
+            //  bookstore interface
             else if (choice == 3) {
 
             }
