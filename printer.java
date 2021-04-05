@@ -3,11 +3,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class printer {
-    static  SimpleDateFormat format_show = new SimpleDateFormat("yyyy-MM-dd");
-    static  DateFormat format_set = new SimpleDateFormat("yyyyMMdd");
+    static  SimpleDateFormat format_show = new SimpleDateFormat("yyyy-MM-dd"); // show date as "yyyy-MM-dd"
+    static  DateFormat format_set = new SimpleDateFormat("yyyyMMdd");          // transfer "yyyyMMdd" into date
+    static  SimpleDateFormat format_set2 = new SimpleDateFormat("yyyy-MM-dd");       // transfer "yyyy-MM-dd" into date
     public static void menu(){
 
-        System.out.println("The System Date is now " + format_show.format(main.sys_date));
         System.out.println("<This is the Book Ordering System.>");
         System.out.println("-------------------------------------------");
         System.out.println("1. System interface");

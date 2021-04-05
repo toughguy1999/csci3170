@@ -19,28 +19,27 @@ public class main{
         Scanner sc = new Scanner(System.in);
         while(true) {
             printer.menu();
-
             int choice = sc.nextInt();
 
+            // system interface
             if (choice == 1) {
-                // system interface
                 printer.system();
                 choice = sc.nextInt();
+                // create
                 if (choice == 1) {
-                    // create
                     system.create();
                 }
+                // delete
                 else if (choice == 2){
-                    // delete
                     system.delete();
                 }
+                // insert
                 else if (choice == 3){
-                    // insert
                     System.out.println("Please enter the folder path:");
                     system.insert(sc.next());
                 }
+                // set date
                 else if (choice == 4){
-                    // set date
                     System.out.println("Please input the date (YYYYMMDD):");
                     String new_date = sc.next();
                     system.set_date(new_date);
@@ -48,16 +47,31 @@ public class main{
                     System.out.println("Latest date in orders: 00");
                     System.out.println("Today is " + printer.format_show.format(sys_date));
                 }
+            }
 
-            } else if (choice == 2) {
+            // bookstore interface
+            else if (choice == 2) {
 
-            } else if (choice == 3) {
+            }
 
-            } else if (choice == 4) {
+            // customer interface
+            else if (choice == 3) {
 
-            } else if (choice == 5) {
+            }
+
+            // show system date
+            else if (choice == 4) {
+                System.out.println("The System Date is now " + printer.format_show.format(main.sys_date));
+
+            }
+
+            // quit
+            else if (choice == 5) {
                 break;
-            } else {
+            }
+
+            // invalid input
+            else {
                 System.out.println("Invalid choice!");
             }
 

@@ -2,6 +2,7 @@
 import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
+import java.util.Date;
 
 public class system {
     static String date ;
@@ -11,7 +12,7 @@ public class system {
             Connection conn;
             Class.forName ("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection (main.url, main.userName, main.password);
-            System.out.println ("Database connection established"); // connect to db
+            System.out.println ("Processing..."); // connect to db
             Statement s = conn.createStatement();
             String createTableSQL1 = "CREATE TABLE book ("
                     + "ISBN CHAR(13) NOT NULL,"
@@ -52,6 +53,8 @@ public class system {
             s.executeUpdate (createTableSQL3);
             s.executeUpdate (createTableSQL4);
             s.executeUpdate (createTableSQL5);
+            s.close();
+            System.out.print ("Successful!");
         }
         catch (ClassNotFoundException e)
         {
@@ -67,13 +70,15 @@ public class system {
             Connection conn;
             Class.forName ("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection (main.url, main.userName, main.password);
-            System.out.println ("Database connection established"); // connect to db
+            System.out.println ("Processing..."); // connect to db
             Statement s = conn.createStatement();
             s.executeUpdate ("DROP TABLE book");
             s.executeUpdate ("DROP TABLE customer");
             s.executeUpdate ("DROP TABLE orders");
             s.executeUpdate ("DROP TABLE ordering");
             s.executeUpdate ("DROP TABLE book_author");
+            s.close();
+            System.out.print ("Successful!");
         }
         catch (ClassNotFoundException e)
         {
@@ -82,23 +87,123 @@ public class system {
         catch (SQLException e) {
             System.out.println(e);
         }
-
-
     }
+
     public static void insert(String path){
         File file = new File(path);
         File[] tempList = file.listFiles();
+        try {
+            Connection conn;
+            Class.forName ("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection (main.url, main.userName, main.password);
+            System.out.println ("Processing..."); // connect to db
+            Statement s = conn.createStatement();
 
-        for (int i = 0; i < tempList.length; i++) {
-            if (tempList[i].isFile()) {
+            // insert one by one
+            for (int i = 0; i < tempList.length; i++) {
+                if (tempList[i].isFile()) {
 
+                    // get table name
+                    String fileName = tempList[i].getName();
+                    // create a file reader
+                    FileInputStream fis = new FileInputStream(tempList[i]);
+                    InputStreamReader isr = new InputStreamReader(fis);
+                    BufferedReader br = new BufferedReader(isr);
+                    String line = null;
 
-                //String fileName = tempList[i].getName();
+                    // insert current file
+                    if (fileName.equals("book.txt")) {
+                        while ((line= br.readLine()) != null) {
+
+                            String[] line_split = line.split("\\|");
+                            int line_split2 = Integer.parseInt(line_split[2]);
+                            int line_split3 = Integer.parseInt(line_split[3]);
+
+                            s.executeUpdate("INSERT INTO book"
+                                    + " VALUES"
+                                    + "("
+                                    +"'"+line_split[0]+"'"+","
+                                    +"'"+line_split[1]+"'"+","
+                                    +line_split2+","
+                                    +line_split3+")");
+                        }
+                    }
+                    else if(fileName.equals("customer.txt")){
+                        while ((line= br.readLine()) != null) {
+
+                            String[] line_split = line.split("\\|");
+
+                            s.executeUpdate("INSERT INTO customer"
+                                    + " VALUES"
+                                    + "("
+                                    +"'"+line_split[0]+"'"+","
+                                    +"'"+line_split[1]+"'"+","
+                                    +"'"+line_split[2]+"'"+","
+                                    +"'"+line_split[3]+"'"+")");
+                        }
+                    }
+                    else if(fileName.equals("orders.txt")){
+                        while ((line= br.readLine()) != null) {
+
+                            String[] line_split = line.split("\\|");
+                            int line_split3 = Integer.parseInt(line_split[3]);
+                            Date d = printer.format_set2.parse(line_split[1]);
+                            java.sql.Date line_split1 = new java.sql.Date(d.getTime());
+
+                            s.executeUpdate("INSERT INTO orders"
+                                    + " VALUES"
+                                    + "("
+                                    +"'"+line_split[0]+"'"+","
+                                    +"'"+line_split1+"'"+","
+                                    +"'"+line_split[2]+"'"+","
+                                    +line_split3+","
+                                    +"'"+line_split[4]+"'"+")");
+                        }
+                    }
+                    else if(fileName.equals("ordering.txt")){
+                        while ((line= br.readLine()) != null) {
+
+                            String[] line_split = line.split("\\|");
+                            int line_split2 = Integer.parseInt(line_split[2]);
+
+                            s.executeUpdate("INSERT INTO ordering"
+                                    + " VALUES"
+                                    + "("
+                                    +"'"+line_split[0]+"'"+","
+                                    +"'"+line_split[1]+"'"+","
+                                    +line_split2+")");
+                        }
+                    }
+                    else if(fileName.equals("book_author.txt")){
+                        while ((line= br.readLine()) != null) {
+
+                            String[] line_split = line.split("\\|");
+
+                            s.executeUpdate("INSERT INTO book_author"
+                                    + " VALUES"
+                                    + "("
+                                    +"'"+line_split[0]+"'"+","
+                                    +"'"+line_split[1]+"'"+")");
+                        }
+                    }
+                    br.close();
+                }
             }
-            if (tempList[i].isDirectory()) {
-
-            }
+            s.close();
+            System.out.print ("Successful!");
         }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println ("[Error]: java MySQL DB driver not found");
+        }
+        catch (SQLException | IOException e) {
+            System.out.println(e);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
     }
     public static void set_date(String date) throws IOException {
         FileWriter fw = new FileWriter(main.date);
@@ -115,7 +220,7 @@ public class system {
             fw.close();
             main.sys_date = printer.format_set.parse("19000101");
         }else {
-            BufferedReader fr = new BufferedReader(new FileReader(date));
+            BufferedReader fr = new BufferedReader(new FileReader(main.date));
             main.sys_date = printer.format_set.parse(fr.readLine());
             fr.close();
         }
