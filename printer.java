@@ -30,6 +30,13 @@ public class printer {
 
     }
     public static void bookstore(){
+        System.out.println ("<This is the bookstore interface.>");
+        System.out.println("-------------------------------------------");
+        System.out.println ("1. Order Update.");
+        System.out.println("2. Order Query.");
+        System.out.println("3. N most Popular Book Query.");
+        System.out.println("4. Back to main menu.\n");
+        System.out.println("What is your choice??  ");
 
     }
     public static void customer(){
