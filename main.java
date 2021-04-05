@@ -62,7 +62,7 @@ public class main {
                 }
             }
 
-            // customer interface
+            //  customer interface
             else if (choice == 2) {
                 printer.customer();
                 choice = sc.nextInt();
@@ -99,7 +99,7 @@ public class main {
                 }
             }
 
-            // bookstore interface
+            //  bookstore interface
             else if (choice == 3) {
 
             }
