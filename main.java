@@ -76,6 +76,7 @@ public class main {
                     if (choice == 3)
                         System.out.print("Input the Author Name: ");
                     customer.search(choice, sc.next());
+                    System.out.println("");
 
                 }
                 if (choice == 2) { // book search
@@ -95,6 +96,35 @@ public class main {
                             break;
                         customer.order_creation(customer_id, ISBN, quantity , sys_date);
                     }
+                    System.out.println("");
+
+                } 
+                if ( choice == 3){
+                    System.out.print("Please enter the OrderID that you want to change:");
+                    int order_id = sc.nextInt();
+
+                    customer.order_detail(order_id);
+                    System.out.println("Which book you want to alter (input book no.):");
+                    int book_no = sc.nextInt();
+                    System.out.println("input add or remove");
+                    String actions = sc.next();
+                    System.out.print("input the number: ");
+                    int no = sc.nextInt();
+                    customer.order_altering(order_id, book_no, actions, no);
+                    System.out.print("");
+
+                }
+                if ( choice == 4){
+                    System.out.print("Please Input Customer ID: ");
+                    String customer_id = sc.next();
+
+                  
+                    System.out.print("Please Input the Year: ");
+                    int year = sc.nextInt();
+                   
+                    customer.order_query(customer_id, year);
+                    System.out.println("");
+
 
                 }
             }

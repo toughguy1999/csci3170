@@ -75,7 +75,8 @@ public class printer {
     }
 
     public static void order_altering() {
-
+        System.out.println ("Please enter the OrderID that you want to change:");
+         
     }
 
     public static void order_query() {
