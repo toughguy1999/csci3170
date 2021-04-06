@@ -14,7 +14,7 @@ public class BS_Order_update {
 	public static void main(String[] args) throws SQLException {
     	String url = "jdbc:mysql://localhost:3306/booksystem";
     	String uname = "root";
-        String password = "";
+        String password = "mwg456123";
         String query = "select shipping_status,charge \r\n"
         		+ "from orders\r\n"
         		+ "where order_id = ?";
@@ -56,7 +56,12 @@ public class BS_Order_update {
     	ResultSet result2 = preparedstatement2.executeQuery();
     	
 		
-    	while(result.next()) {
+
+    	if(result.next() == false) {
+    			System.out.println("No such Order ID exist");
+        	}
+    		else{
+    			do {
     		//convert string to char
     		char shipping_status = result.getString("shipping_status").charAt(0);    		
     		
@@ -94,12 +99,10 @@ public class BS_Order_update {
     	    	}
 
     		}
+    			}while(result.next());
 				
     	}
     	
-    	if(!result.next()) {
-			System.out.println("No such Order ID exist");
-    	}
     	
     }
     // Handle any errors that may have occurred.
