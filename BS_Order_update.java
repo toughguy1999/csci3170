@@ -14,7 +14,7 @@ public class BS_Order_update {
 	public static void main(String[] args) throws SQLException {
     	String url = "jdbc:mysql://localhost:3306/booksystem";
     	String uname = "root";
-        String password = "mwg456123";
+        String password = "";
         String query = "select shipping_status,charge \r\n"
         		+ "from orders\r\n"
         		+ "where order_id = ?";
