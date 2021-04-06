@@ -13,7 +13,7 @@ public class BS_Order_query {
 	public static void main(String[] args) throws SQLException {
 	    	String url = "jdbc:mysql://localhost:3306/booksystem";
 	    	String uname = "root";
-	        String password = "mwg456123";
+	        String password = "";
 	        String order_query = "SELECT *  "
 	        		+ " FROM orders \r\n"
 	        		+ " WHERE MONTH(o_date) = ? "
