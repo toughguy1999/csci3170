@@ -164,5 +164,22 @@ public class system {
             e.printStackTrace();
         }
     }
+    
+    public static void get_latest_order(){
+    String query = "select max(o_date) as date from orders ";
+    try{
+        Statement latest = main.conn.createStatement();
+        ResultSet result = latest.executeQuery(query);
+        if (!result.isBeforeFirst())
+            System.out.println("No order founded");
+        else {
+            result.next();
+            String latest_date = printer.format_show.format(result.getDate("date"));
+            System.out.println("Latest date in orders: " + latest_date);
+        }
+    } catch (SQLException e) {
+        System.out.println(e);
+    }
+}
 
 }

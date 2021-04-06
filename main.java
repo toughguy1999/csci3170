@@ -57,7 +57,7 @@ public class main {
                     String new_date = sc.next();
                     system.set_date(new_date);
                     sys_date = printer.format_set.parse(new_date);
-                    System.out.println("Latest date in orders: 00");
+                    system.get_latest_order();
                     System.out.println("Today is " + printer.format_show.format(sys_date));
                 }
             }
