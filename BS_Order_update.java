@@ -40,7 +40,7 @@ public class BS_Order_update {
         e.printStackTrace(); 
     }
     
-    try {
+    	try {
     	//make connection
     	Connection con = DriverManager.getConnection(url,uname,password );
     	//create a statement  using connection object
@@ -96,6 +96,7 @@ public class BS_Order_update {
     		}
 				
     	}
+    	
     	if(!result.next()) {
 			System.out.println("No such Order ID exist");
     	}
@@ -106,4 +107,4 @@ public class BS_Order_update {
         e.printStackTrace();
     }
 }
-}
+				}
