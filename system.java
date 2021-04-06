@@ -5,15 +5,11 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class system {
-    static String date;
 
     public static void create() {
         try {
-            Connection conn;
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(main.url, main.userName, main.password);
-            System.out.println("Processing..."); // connect to db
-            Statement s = conn.createStatement();
+            System.out.println("Processing...");
+            Statement s = main.conn.createStatement();
             String createTableSQL1 = "CREATE TABLE book (" + "ISBN CHAR(13) NOT NULL," + "title VARCHAR(100) NOT NULL,"
                     + "unit_price INT(4) NOT NULL," + "no_of_copies INT(4) NOT NULL," + "PRIMARY KEY (ISBN)" + ")";
             String createTableSQL2 = "CREATE TABLE customer (" + "customer_id CHAR(10) NOT NULL,"
@@ -34,8 +30,7 @@ public class system {
             s.executeUpdate(createTableSQL5);
             s.close();
             System.out.println("Successful!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("[Error]: java MySQL DB driver not found");
+
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -43,11 +38,9 @@ public class system {
 
     public static void delete() {
         try {
-            Connection conn;
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(main.url, main.userName, main.password);
-            System.out.println("Processing..."); // connect to db
-            Statement s = conn.createStatement();
+
+            System.out.println("Processing...");
+            Statement s = main.conn.createStatement();
             s.executeUpdate("DROP TABLE book");
             s.executeUpdate("DROP TABLE customer");
             s.executeUpdate("DROP TABLE orders");
@@ -55,8 +48,6 @@ public class system {
             s.executeUpdate("DROP TABLE book_author");
             s.close();
             System.out.println("Successful!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("[Error]: java MySQL DB driver not found");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -66,11 +57,8 @@ public class system {
         File file = new File(path);
         File[] tempList = file.listFiles();
         try {
-            Connection conn;
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(main.url, main.userName, main.password);
             System.out.println("Processing..."); // connect to db
-            Statement s = conn.createStatement();
+            Statement s = main.conn.createStatement();
 
             // insert one by one
             for (int i = 0; i < tempList.length; i++) {
@@ -85,6 +73,7 @@ public class system {
                     String line = null;
 
                     // insert current file
+
                     if (fileName.equals("book.txt")) {
                         while ((line = br.readLine()) != null) {
 
@@ -139,8 +128,6 @@ public class system {
             }
             s.close();
             System.out.println("Successful!");
-        } catch (ClassNotFoundException e) {
-            System.out.println("[Error]: java MySQL DB driver not found");
         } catch (SQLException | IOException e) {
             System.out.println(e);
         } catch (ParseException e) {
@@ -149,25 +136,33 @@ public class system {
 
     }
 
-    public static void set_date(String date) throws IOException {
-        FileWriter fw = new FileWriter(main.date);
-        fw.write(date);
-        fw.flush();
-        fw.close();
-    }
-
-    public static void get_date() throws ParseException, IOException {
-        if (!main.date.exists()) {
-            main.date.createNewFile();
+    public static void set_date(String date)  {
+        try {
             FileWriter fw = new FileWriter(main.date);
-            fw.write("19000101");
+            fw.write(date);
             fw.flush();
             fw.close();
-            main.sys_date = printer.format_set.parse("19000101");
-        } else {
-            BufferedReader fr = new BufferedReader(new FileReader(main.date));
-            main.sys_date = printer.format_set.parse(fr.readLine());
-            fr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    public static void get_date() {
+        try {
+            if (!main.date.exists()) {
+                FileWriter fw = new FileWriter(main.date);
+                fw.write("19000101");
+                fw.flush();
+                fw.close();
+                main.sys_date = printer.format_set.parse("19000101");
+            } else {
+                BufferedReader fr = new BufferedReader(new FileReader(main.date));
+                main.sys_date = printer.format_set.parse(fr.readLine());
+                fr.close();
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
