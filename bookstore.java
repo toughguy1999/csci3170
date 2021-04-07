@@ -1,4 +1,3 @@
-package JDBC;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -36,16 +35,15 @@ public class bookstore {
 		    
 		    	try {
 		    	//make connection
-		    	Connection con = DriverManager.getConnection(url,uname,password );
 		    	//create a statement  using connection object
 		    	
 		    	//query
-		    	PreparedStatement preparedstatement = con.prepareStatement(query);
+		    	PreparedStatement preparedstatement = main.conn.prepareStatement(query);
 		    	preparedstatement.setString(1, order_id);
 		    	ResultSet result = preparedstatement.executeQuery();
 
 		    	//query2
-		    	PreparedStatement preparedstatement2 = con.prepareStatement(query2);
+		    	PreparedStatement preparedstatement2 = main.conn.prepareStatement(query2);
 		    	preparedstatement2.setString(1, order_id);
 		    	ResultSet result2 = preparedstatement2.executeQuery();
 		    	
@@ -73,7 +71,7 @@ public class bookstore {
 		                		update = dd.next().charAt(0);
 
 		            		if(update == 'Y') {
-		            	    	PreparedStatement update_ss = con.prepareStatement("UPDATE orders SET shipping_status = 'Y' WHERE order_id =?");
+		            	    	PreparedStatement update_ss = main.conn.prepareStatement("UPDATE orders SET shipping_status = 'Y' WHERE order_id =?");
 		            	    	update_ss.setString(1, order_id);
 		            	    	//To manipulate data you actually need executeUpdate() rather than executeQuery().!
 		            	    	update_ss.executeUpdate(); 
@@ -148,17 +146,17 @@ public class bookstore {
 		    
 		    try {
 		    	//make connection
-		    	Connection con = DriverManager.getConnection(url,uname,password );
+		    
 		    	//create a statement  using connection object
 		    	
 		    	
-		    	PreparedStatement OQ1 = con.prepareStatement(order_query);
+		    	PreparedStatement OQ1 = main.conn.prepareStatement(order_query);
 		  
 		    	OQ1.setString(1, month);
 		    	OQ1.setString(2, year);
 		    	ResultSet OQ1_result = OQ1.executeQuery();
 		    	
-		    	PreparedStatement OQ2 = con.prepareStatement(order_charge_sum);
+		    	PreparedStatement OQ2 = main.conn.prepareStatement(order_charge_sum);
 		    	OQ2.setString(1, month);
 		    	OQ2.setString(2, year);
 		    	ResultSet OQ2_result = OQ2.executeQuery();
@@ -233,11 +231,11 @@ public class bookstore {
 
 			 try {
 			    	//make connection
-			    	Connection con = DriverManager.getConnection(url,uname,password );
+			    
 			    	//create a statement  using connection object
 			    	
 			    	//PreparedStatement N_mostpop = con.prepareStatement(N_query);
-			    	Statement N_mostpop = con.createStatement();   //for generate a query
+			    	Statement N_mostpop = main.conn.createStatement();   //for generate a query
 			    	ResultSet N_result = N_mostpop.executeQuery(N_query); // To get the result (not in preparedstatement)
 			    	
 			    
@@ -291,4 +289,4 @@ public class bookstore {
 		 
 	}
 
-}
+
