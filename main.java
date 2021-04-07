@@ -56,9 +56,7 @@ public class main {
                     System.out.println("Please input the date (YYYYMMDD):");
                     String new_date = sc.next();
                     system.set_date(new_date);
-                    sys_date = printer.format_set.parse(new_date);
                     system.get_latest_order();
-                    System.out.println("Today is " + printer.format_show.format(sys_date));
                 }
             }
 
