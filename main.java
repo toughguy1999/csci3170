@@ -131,18 +131,23 @@ public class main {
 
             //  bookstore interface
             else if (choice == 3) {
+                System.out.println();
             	printer.bookstore();
                 choice = sc.nextInt();
                 if(choice == 1) {
+                    System.out.println();
                 	bookstore.BS_order_update();
                 }
                 else if(choice == 2) {
+                    System.out.println();
                 	bookstore.BS_order_query();
                 }
                 else if(choice ==3 ) {
+                    System.out.println();
                 	bookstore.N_mostpopular();
                 }
                 else if(choice == 4)
+               System.out.println();
                 	continue;
             }
 
