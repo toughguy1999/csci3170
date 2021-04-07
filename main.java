@@ -131,7 +131,19 @@ public class main {
 
             //  bookstore interface
             else if (choice == 3) {
-
+            	printer.bookstore();
+                choice = sc.nextInt();
+                if(choice == 1) {
+                	bookstore.BS_order_update();
+                }
+                else if(choice == 2) {
+                	bookstore.BS_order_query();
+                }
+                else if(choice ==3 ) {
+                	bookstore.N_mostpopular();
+                }
+                else if(choice == 4)
+                	continue;
             }
 
             // show system date
