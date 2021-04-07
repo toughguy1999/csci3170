@@ -142,8 +142,12 @@ public class system {
             fw.write(date);
             fw.flush();
             fw.close();
+            main.sys_date = printer.format_set.parse(date);
+            System.out.println("Today is " + printer.format_show.format(main.sys_date));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            System.out.println("incorrect format!");
         }
     }
 
@@ -177,9 +181,9 @@ public class system {
             String latest_date = printer.format_show.format(result.getDate("date"));
             System.out.println("Latest date in orders: " + latest_date);
         }
-    } catch (SQLException e) {
-        System.out.println(e);
+    } catch (SQLException | NullPointerException e) {
+        System.out.println("No orders yet.");
     }
-}
+    }
 
 }
