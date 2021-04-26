@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
@@ -76,7 +75,7 @@ public class system {
 
                     if (fileName.equals("book.txt")) {
                         while ((line = br.readLine()) != null) {
-
+                            line = line.replaceAll("'","\\\\\'");
                             String[] line_split = line.split("\\|");
                             int line_split2 = Integer.parseInt(line_split[2]);
                             int line_split3 = Integer.parseInt(line_split[3]);
@@ -86,6 +85,7 @@ public class system {
                         }
                     } else if (fileName.equals("customer.txt")) {
                         while ((line = br.readLine()) != null) {
+                            line = line.replaceAll("'","\\\\\'");
 
                             String[] line_split = line.split("\\|");
 
@@ -95,6 +95,7 @@ public class system {
                         }
                     } else if (fileName.equals("orders.txt")) {
                         while ((line = br.readLine()) != null) {
+                            line = line.replaceAll("'","\\\\\'");
 
                             String[] line_split = line.split("\\|");
                             int line_split3 = Integer.parseInt(line_split[3]);
@@ -107,6 +108,7 @@ public class system {
                         }
                     } else if (fileName.equals("ordering.txt")) {
                         while ((line = br.readLine()) != null) {
+                            line = line.replaceAll("'","\\\\\'");
 
                             String[] line_split = line.split("\\|");
                             int line_split2 = Integer.parseInt(line_split[2]);
@@ -116,6 +118,7 @@ public class system {
                         }
                     } else if (fileName.equals("book_author.txt")) {
                         while ((line = br.readLine()) != null) {
+                            line = line.replaceAll("'","\\\\\'");
 
                             String[] line_split = line.split("\\|");
 
@@ -169,21 +172,26 @@ public class system {
         }
     }
     
-    public static void get_latest_order(){
-    String query = "select max(o_date) as date from orders ";
-    try{
-        Statement latest = main.conn.createStatement();
-        ResultSet result = latest.executeQuery(query);
-        if (!result.isBeforeFirst())
-            System.out.println("No order founded");
-        else {
-            result.next();
-            String latest_date = printer.format_show.format(result.getDate("date"));
-            System.out.println("Latest date in orders: " + latest_date);
+    public static String get_latest_order() {
+        String query = "select max(o_date) as date from orders ";
+        String latest_date = null;
+        try {
+            Statement latest = main.conn.createStatement();
+            ResultSet result = latest.executeQuery(query);
+            if (!result.isBeforeFirst())
+                System.out.println("No order founded");
+
+            else {
+                result.next();
+                latest_date = printer.format_show.format(result.getDate("date"));
+                System.out.println("Latest date in orders: " + latest_date);
+                latest_date = latest_date.replaceAll("-","");
+
+            }
+        } catch (SQLException | NullPointerException e) {
+            System.out.println("No orders yet.");
         }
-    } catch (SQLException | NullPointerException e) {
-        System.out.println("No orders yet.");
-    }
+        return latest_date;
     }
 
 }

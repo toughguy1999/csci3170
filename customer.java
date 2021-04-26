@@ -23,15 +23,15 @@ public class customer {
                     + key + "' order by ISBN ASC";
             break;
         }
-
+        System.out.println("select * from book  where title like  '" + key + "' order by ISBN ASC");
         try {
             Statement s = main.conn.createStatement();
 
             ResultSet result = s.executeQuery(search);
 
-            if (!result.isBeforeFirst())
+            if (!result.isBeforeFirst()) {
                 System.out.println("No records found.");
-            else
+            } else {
                 while (result.next()) {
                     System.out.println("");
 
@@ -51,6 +51,7 @@ public class customer {
                     System.out.println("");
                     author.close();
                 }
+            }
             s.close();
 
         } catch (SQLException e) {
@@ -89,13 +90,14 @@ public class customer {
                         + customer + "');";
 
                 String insert2 = "insert into ordering values(" + order_id + ",'" + ISBN + "'," + quantity + ");";
+
                 try {
                     Statement s = main.conn.createStatement();
                     Statement s_2 = main.conn.createStatement();
 
                     s.executeUpdate(insert);
                     s_2.executeUpdate(insert2);
-
+                    System.out.println("Order is Created Successfully! ");
                 } catch (SQLException e) {
                     System.out.println(e);
                 }
@@ -111,15 +113,17 @@ public class customer {
         try {
             Statement check = main.conn.createStatement();
             ResultSet result = check.executeQuery(insert);
+
             if (!result.isBeforeFirst())
                 System.out.println("Book not found.");
             else {
                 result.next();
-                if (result.getInt("no_of_copies") - no > 0)
+                if (result.getInt("no_of_copies") - no >= 0)
                     return result.getInt("unit_price");
                 else
                     return 0;
             }
+
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -132,7 +136,7 @@ public class customer {
             Statement check = main.conn.createStatement();
             ResultSet result = check.executeQuery(insert);
             if (!result.isBeforeFirst())
-                System.out.println("Error");
+                return 1;
             else {
                 result.next();
                 return result.getInt("id") + 1;

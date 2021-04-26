@@ -55,12 +55,16 @@ public class main {
                 else if (choice == 4) {
                     System.out.println("Please input the date (YYYYMMDD):");
                     String new_date = sc.next();
-                    system.set_date(new_date);
-                    system.get_latest_order();
+                    String latest_order = system.get_latest_order();
+                    if (Integer.parseInt(new_date) >= Integer.parseInt(latest_order)) {
+                        system.set_date(new_date);
+                    } else {
+                        System.out.println("Please input right date!");
+                    }
                 }
             }
 
-            //  customer interface
+            // customer interface
             else if (choice == 2) {
                 printer.customer();
                 choice = sc.nextInt();
@@ -73,11 +77,16 @@ public class main {
                         System.out.print("Input the Book Title: ");
                     if (choice == 3)
                         System.out.print("Input the Author Name: ");
-                    customer.search(choice, sc.next());
+
+                    if (choice < 4) {
+                        sc.nextLine();
+                        String se = sc.nextLine();
+                        customer.search(choice, se);
+                    }
+                    choice = 0;
                     System.out.println("");
 
-                }
-                if (choice == 2) { // book search
+                } else if (choice == 2) { // book search
                     System.out.print("Please enter your customerID?? ");
                     String customer_id = sc.next();
                     printer.order_creation();
@@ -92,12 +101,11 @@ public class main {
                         }
                         if (ISBN.equals("F"))
                             break;
-                        customer.order_creation(customer_id, ISBN, quantity , sys_date);
+                        customer.order_creation(customer_id, ISBN, quantity, sys_date);
                     }
                     System.out.println("");
 
-                } 
-                if ( choice == 3){
+                } else if (choice == 3) {
                     System.out.print("Please enter the OrderID that you want to change:");
                     int order_id = sc.nextInt();
 
@@ -111,42 +119,36 @@ public class main {
                     customer.order_altering(order_id, book_no, actions, no);
                     System.out.print("");
 
-                }
-                if ( choice == 4){
+                } else if (choice == 4) {
                     System.out.print("Please Input Customer ID: ");
                     String customer_id = sc.next();
 
-                  
                     System.out.print("Please Input the Year: ");
                     int year = sc.nextInt();
-                   
+
                     customer.order_query(customer_id, year);
                     System.out.println("");
-
 
                 }
             }
 
-            //  bookstore interface
+            // bookstore interface
             else if (choice == 3) {
                 System.out.println();
-            	printer.bookstore();
+                printer.bookstore();
                 choice = sc.nextInt();
-                if(choice == 1) {
+                if (choice == 1) {
                     System.out.println();
-                	bookstore.BS_order_update();
-                }
-                else if(choice == 2) {
+                    bookstore.BS_order_update();
+                } else if (choice == 2) {
                     System.out.println();
-                	bookstore.BS_order_query();
-                }
-                else if(choice ==3 ) {
+                    bookstore.BS_order_query();
+                } else if (choice == 3) {
                     System.out.println();
-                	bookstore.N_mostpopular();
-                }
-                else if(choice == 4)
-               System.out.println();
-                	continue;
+                    bookstore.N_mostpopular();
+                } else if (choice == 4)
+                    System.out.println();
+                continue;
             }
 
             // show system date
