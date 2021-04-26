@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class main {
-    static String userName = "root";
-    static String password = "Audris05";
-    static String url = "jdbc:mysql://localhost:3306/db_3170?useSSL=false"; // username,pwd,and url can be used by other
+    static String userName = "Group27";
+    static String password = "group27mysql";
+    static String url = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db27"; // username,pwd,and url can be used by other
                                                                             // module
     static Connection conn;
     static Date sys_date;
