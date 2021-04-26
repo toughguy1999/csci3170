@@ -23,7 +23,7 @@ public class customer {
                     + key + "' order by ISBN ASC";
             break;
         }
-        System.out.println("select * from book  where title like  '" + key + "' order by ISBN ASC");
+
         try {
             Statement s = main.conn.createStatement();
 
@@ -81,7 +81,7 @@ public class customer {
             }
 
         } else {
-            int price = checkBookAvaible(ISBN, 1);
+            int price = checkBookAvaible(ISBN, quantity);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String stringdate = simpleDateFormat.format(date);
             if (price != 0) {
@@ -118,6 +118,7 @@ public class customer {
                 System.out.println("Book not found.");
             else {
                 result.next();
+
                 if (result.getInt("no_of_copies") - no >= 0)
                     return result.getInt("unit_price");
                 else
